@@ -28,12 +28,12 @@ public class PacMan {
             Posn positionB = new Posn(position.x, yB);
             return new PacMan(positionB, direction, lives);
         } else if(direction == 3){
-            int xB = position.x - dx;
-            Posn positionB = new Posn(xB, position.y);
+            int xB2 = position.x - dx;
+            Posn positionB = new Posn(xB2, position.y);
             return new PacMan(positionB, direction, lives);
         } else if(direction == 4){
-            int yB = position.y + dy;
-            Posn positionB = new Posn(position.x, yB);
+            int yB2 = position.y + dy;
+            Posn positionB = new Posn(position.x, yB2);
             return new PacMan(positionB, direction, lives);
         } else return this;
     }

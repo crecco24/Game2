@@ -15,9 +15,9 @@ public class Field extends World {
     Ghost inky;
     Ghost clyde;
     ArrayList pellets;
-    ArrayList walls;
-    int upperBound = 720;
-    int rightBound = 720;
+    ArrayList<Walls> walls;
+    int upperBound = 500;
+    int rightBound = 500;
     
     Field(int s, PacMan p, Ghost b, Ghost pink, Ghost i, Ghost c, ArrayList pellets){
         this.score = s;
@@ -27,17 +27,17 @@ public class Field extends World {
         this.inky = i;
         this.clyde = c;
         this.pellets = pellets;
-        this.walls = new ArrayList();
+        this.walls = new ArrayList(); 
+        walls.add(new Walls(rightBound - 5, upperBound, 0, rightBound - 5));
+        walls.add(new Walls(rightBound, 50, 50, 0));
     }
     
     public World onTick(){
         PacMan pMan = pacMan.move();
-        if(pMan.position.x > rightBound || pMan.position.x < 0){
-            pMan = new PacMan(pacMan.position, pacMan.direction, pacMan.lives);
-        }
-        if(pMan.position.y > upperBound || pMan.position.y < 0){
-            pMan = pacMan;
-        }
+        int newX = pMan.position.x;
+        int newY = pMan.position.y;
+        Posn newPosn = new Posn (Math.abs(newX) % rightBound, Math.abs(newY) % upperBound);
+        pMan = new PacMan(newPosn, pMan.direction, pMan.lives);
         
         Ghost b2 = blinky.move(pacMan);
         if(b2.position.x > rightBound || b2.position.x < 0){
@@ -70,7 +70,7 @@ public class Field extends World {
         if(c2.position.y > upperBound || c2.position.y < 0){
             c2 = blinky;
         }
-        
+        System.out.println("pacman position " + pMan.position.x);
         return new Field(score,
                          pMan,
                          b2,
@@ -78,7 +78,6 @@ public class Field extends World {
                          i2,
                          c2,
                          pellets);
-        
     }
     
     public World onKeyEvent(String key){
@@ -98,12 +97,15 @@ public class Field extends World {
     }
     
     public WorldImage makeImage(){
-        WorldImage field = new RectangleImage(new Posn(0,0), 1000, 1000, java.awt.Color.BLACK);
+        WorldImage field = new RectangleImage(new Posn(0,0), 1500, 1500, java.awt.Color.BLACK);
         field = new OverlayImages(field, pacMan.makeImage());
         field = new OverlayImages(field, blinky.makeImage());
         field = new OverlayImages(field, pinky.makeImage());
         field = new OverlayImages(field, inky.makeImage());
         field = new OverlayImages(field, clyde.makeImage());
+        for(int i = 0; i < walls.size(); i++){
+        field = new OverlayImages(field, walls.get(i).makeImage());
+        }
         return field;
     }
     

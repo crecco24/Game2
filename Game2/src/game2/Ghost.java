@@ -25,12 +25,13 @@ public class Ghost {
     public Ghost move(PacMan p) {
         if (type == 1) {
             return move1(p);
-        } else if (type == 2) {
-            return move2();
-        } else if (type == 3) {
-            return move3();
-        } else if (type == 4) {
-            return move4();
+//        } else if (type == 2) {
+//            return move2();
+//        } else if (type == 3) {
+//            return move3();
+//        } else if (type == 4) {
+//            return move4();
+//        }
         } else {
             return this;
         }
