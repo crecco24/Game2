@@ -1,5 +1,6 @@
 
 package game2;
+import java.util.ArrayList;
 import javalib.worldimages.*;
 
 public class PacMan {
@@ -48,6 +49,22 @@ public class PacMan {
         } else if (key.equals("down")){
             return new PacMan(position, 4, lives);
         } else return this;
+    }
+    
+    public int distance(Posn p){
+        int a = position.x - p.x;
+        int b = position.y - p.y;
+        int c = (int) Math.sqrt((a * a) + (b * b));
+        return c;
+    }
+    
+    public boolean wallContact(Walls w){
+        for (int i = 0; i < w.walls.size(); i++) {
+            if (distance(w.walls.get(i)) <= 5) {
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean ghostContact(Ghost g){
