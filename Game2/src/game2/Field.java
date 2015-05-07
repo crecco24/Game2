@@ -12,7 +12,7 @@ public class Field extends World {
     Ghost pinky;
     Ghost inky;
     Ghost clyde;
-    ArrayList pellets;
+    ArrayList<Consumable> pellets;
     ArrayList<Walls> walls = new ArrayList();
     int upperBound = 500;
     int rightBound = 500;
@@ -25,14 +25,34 @@ public class Field extends World {
         this.inky = i;
         this.clyde = c;
         this.pellets = pellets;
-
-        walls.add(new Walls(rightBound - 5, upperBound, (upperBound / 2) + 20, rightBound - 5));
-        walls.add(new Walls(rightBound - 5, upperBound, (upperBound / 2) + 20, rightBound - 5));
-        walls.add(new Walls(rightBound - 5, (upperBound / 2) - 20, 0, rightBound - 5));
-        walls.add(new Walls(rightBound, upperBound - 5, upperBound - 5, 0));
-        walls.add(new Walls(rightBound, 5, 5, 0));
-        walls.add(new Walls(5, upperBound, (upperBound / 2) + 20, 5));
-        walls.add(new Walls(5, (upperBound / 2) - 20, 0, 5));
+        
+        //upperbound
+        walls.add(new Walls(new Posn(5,5), rightBound/2 - 40, 0));
+        walls.add(new Walls(new Posn(rightBound/2 + 40,5), rightBound/2 - 45, 0));
+        
+        //rightbound
+        walls.add(new Walls(new Posn(rightBound -5, 5), 0, upperBound/2 - 40));
+        walls.add(new Walls(new Posn(rightBound -5, upperBound/2 + 40), 0, upperBound/2 -45));
+        
+        //lowerbound
+        walls.add(new Walls(new Posn(5,upperBound-5), rightBound/2 - 40, 0));
+        walls.add(new Walls(new Posn(rightBound/2 + 40,upperBound-5), rightBound/2 - 45, 0));
+        
+        //leftbound
+        walls.add(new Walls(new Posn(5, 5), 0, upperBound/2 - 40));
+        walls.add(new Walls(new Posn(5, upperBound/2 + 40), 0, upperBound/2 -45));
+        
+        //upperleftbox
+        walls.add(new Walls(new Posn(50,50), rightBound/2 - 90, 0));
+        walls.add(new Walls(new Posn(50,100), rightBound/2 - 90, 0));
+        walls.add(new Walls(new Posn(50,50), 0, 50));
+        walls.add(new Walls(new Posn(rightBound/2 - 40, 50), 0, 50));
+        
+        //upperrightbox
+        walls.add(new Walls(new Posn(rightBound - rightBound/2 +40, 50), rightBound/2-90, 0));
+        walls.add(new Walls(new Posn(rightBound - rightBound/2 +40, 100), rightBound/2-90, 0));
+        walls.add(new Walls(new Posn(rightBound - rightBound/2 +40, 50), 0, 50));
+        walls.add(new Walls(new Posn(rightBound - 50, 50), 0, 50));
     }
 
     public World onTick() {
@@ -80,6 +100,12 @@ public class Field extends World {
         if (c2.position.y > upperBound || c2.position.y < 0) {
             c2 = blinky;
         }
+        
+        for(int i = 0; i < pellets.size(); i++){
+            if(pacMan.pelletConsumed(pellets.get(i))){
+                increaseScore(pellets.get(i));
+            }
+        }
 
         return new Field(score,
                 pMan,
@@ -124,6 +150,9 @@ public class Field extends World {
         field = new OverlayImages(field, clyde.makeImage());
         for (int i = 0; i < walls.size(); i++) {
             field = new OverlayImages(field, walls.get(i).makeImage());
+        }
+        for (int i = 0; i< pellets.size(); i++){
+            field = new OverlayImages(field, pellets.get(i).makeImage());
         }
         return field;
     }

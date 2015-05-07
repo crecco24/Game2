@@ -6,7 +6,9 @@ import javalib.worldimages.*;
 public interface Consumable {
     
     Boolean isConsumed(PacMan p);
-    
+    Posn getPosn();
     int getScore();
+    
+    WorldImage makeImage();
     
 }

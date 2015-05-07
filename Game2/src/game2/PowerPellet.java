@@ -12,6 +12,10 @@ public class PowerPellet implements Consumable {
         this.posn = p;
     }
     
+    public Posn getPosn(){
+        return posn;
+    }
+    
     public Boolean isConsumed(PacMan p){
         if(p.position == posn){
             return true;
@@ -24,7 +28,7 @@ public class PowerPellet implements Consumable {
     }
     
     public WorldImage makeImage(){
-        return new DiskImage(posn, 5, java.awt.Color.YELLOW);
+        return new DiskImage(posn, 10, java.awt.Color.YELLOW);
     }
     
 }

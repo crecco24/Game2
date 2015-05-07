@@ -6,43 +6,47 @@ import javalib.worldimages.*;
 
 public class Walls {
 
-    int rightEnd;
-    int topEnd;
-    int bottomEnd;
-    int leftEnd;
-    ArrayList<Posn> walls;
+    Posn start;
+    int width;
+    int height;
 
-    public Walls(int rightBound, int upperBound, int lowerBound, int leftBound) {
-        this.rightEnd = rightBound;
-        this.topEnd = upperBound;
-        this.bottomEnd = lowerBound;
-        this.leftEnd = leftBound;
+    ArrayList<Posn> points;
 
-        makeWall();
+    public Walls(Posn start, int width, int height) {
+        this.start = start;
+        this.width = width;
+        this.height = height;
+        
+        this.points = makeWall();
     }
 
-    private void makeWall() {
-        for (int i = 0; i < rightEnd; i++) {
-            for (int j = 0; j < topEnd; j++) {
-                Posn point = new Posn(leftEnd + i, bottomEnd + j);
-                walls.add(point);
-                System.out.println("contents of walls " + "(" +  point.x + "," + point.y + ")");
+    public ArrayList<Posn> makeWall() {
+        ArrayList<Posn> returner = new ArrayList();
+        if (width == 0) {
+            for (int i = 0; i < height; i++) {
+                Posn point = new Posn(start.x, start.y + i);
+                returner.add(point);
+            }
+        } else {
+            for (int i = 0; i < width; i++) {
+                Posn point = new Posn(start.x + i, start.y);
+                returner.add(point);
             }
         }
+        return returner;
     }
 
     public WorldImage makeImage() {
-        
-        
-        Posn start = new Posn(leftEnd,bottomEnd);
-        Posn end = new Posn (rightEnd, topEnd);
-        WorldImage wall = new LineImage(start, end, java.awt.Color.BLUE);
-//        for (int i = 0; i < walls.size(); i++) {
-//            Posn start = new Posn(leftEnd, bottomEnd);
-//            Posn end = new Posn(rightEnd, topEnd);
-//            wall = new LineImage(start, end, java.awt.Color.BLUE);
-//        }
-        return wall;
+
+        if (width == 0) {
+            Posn end = new Posn(start.x, start.y + height);
+            WorldImage wall = new LineImage(start, end, java.awt.Color.BLUE);
+            return wall;
+        } else {
+            Posn end = new Posn(start.x + width, start.y);
+            WorldImage wall = new LineImage(start, end, java.awt.Color.BLUE);
+            return wall;
+        }
     }
 
 }
