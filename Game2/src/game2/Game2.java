@@ -2,23 +2,23 @@
 package game2;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javalib.worldimages.*;
 
 public class Game2 {
 
-    public static void main(String[] args) {
-        ArrayList<Consumable> pellets = new ArrayList();
-        pellets.add(new Pellet(new Posn(125, 125)));
+    public static void main(String[] args) {  
         
-        Field f = new Field(0, 
-                            new PacMan(new Posn(250,250), 3, 1),
-                            new Ghost(new Posn(50, 50), 1),
-                            new Ghost(new Posn(50, 50), 2),
-                            new Ghost(new Posn(50, 50), 3),
-                            new Ghost(new Posn(50, 50), 4),
-                            pellets);
+        Field f = new Field(4500, 
+                            new PacMan(new Posn(250,300), 3, 3),
+                            new Ghost(new Posn(250, 250), 1, false),
+                            new Ghost(new Posn(250, 250), 2, false),
+                            new Ghost(new Posn(250, 250), 3, false),
+                            new Ghost(new Posn(250, 250), 4, false),
+                            new Pellets().pellets);
         
-        f.bigBang(f.upperBound, f.rightBound, .001);
+        f.bigBang(f.rightBound + 200, f.upperBound, .002);
+        
     }
     
 }
