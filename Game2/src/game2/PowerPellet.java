@@ -10,6 +10,7 @@ public class PowerPellet implements Consumable {
     
     public PowerPellet(Posn p){
         this.posn = p;
+        this.score = 70;
     }
     
     public Posn getPosn(){
@@ -29,6 +30,10 @@ public class PowerPellet implements Consumable {
     
     public WorldImage makeImage(){
         return new DiskImage(posn, 10, java.awt.Color.YELLOW);
+    }
+    
+    public boolean makeEdible(){
+        return true;
     }
     
 }

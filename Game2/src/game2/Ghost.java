@@ -10,11 +10,11 @@ public class Ghost {
     boolean edible;
     int direction;
 
-    Ghost(Posn p, int t, boolean e) {
+    Ghost(Posn p, int t, boolean e, int direction) {
         this.position = p;
         this.type = t;
         this.edible = e;
-        this.direction = randInt(1,4);
+        this.direction = direction;
     }
 
     public static int randInt(int min, int max) {
@@ -39,37 +39,10 @@ public class Ghost {
         return move2(changeDirectionHuh());
     }
 
-    public Ghost move1() {
-        int chooser = randInt(0, 2);
-        int picker = randInt(0, 2);
-        int dx = 1;
-        int dy = 1;
-        if (chooser % 2 == 0) {
-            if (picker % 2 == 0) {
-                Posn positionB = new Posn(position.x + dx, position.y);
-                return new Ghost(positionB, type, edible);
-            } else if (picker % 2 == 1) {
-                Posn positionB = new Posn(position.x - dx, position.y);
-                return new Ghost(positionB, type, edible);
-            } else {
-                return this;
-            }
-        } else if (picker % 2 == 0) {
-            Posn positionB = new Posn(position.x, position.y + dy);
-            return new Ghost(positionB, type, edible);
-        } else if (picker % 2 == 0) {
-            Posn positionB = new Posn(position.x, position.y - dy);
-            return new Ghost(positionB, type, edible);
-        } else {
-            return this;
-        }
-    }
-
     public Ghost move2(boolean b) {
-//        if(b){
-//            changeDirection();
-//            System.out.println("changing directions");
-//        }
+        if(b){
+            changeDirection();
+        }
         int currentX = position.x;
         int currentY = position.y;
         int deltaX = 1;
@@ -84,8 +57,7 @@ public class Ghost {
         } else if (direction == 4) {
             newPosn = new Posn(currentX, currentY + deltaY);
         }
-        position = newPosn;
-        return this;
+        return new Ghost(newPosn, type, edible, direction);
     }
 
     public int distance(Posn p) {

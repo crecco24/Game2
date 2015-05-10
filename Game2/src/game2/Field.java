@@ -108,11 +108,11 @@ public class Field extends World {
         int bY = b2.position.y;
 
         Posn bPosn = new Posn(Math.abs(bX) % rightBound, Math.abs(bY) % upperBound);
-        b2 = new Ghost(bPosn, blinky.type, blinky.edible);
+        b2 = new Ghost(bPosn, blinky.type, blinky.edible, blinky.direction);
 
         for (int i = 0; i < walls.size(); i++) {
             if (b2.wallContact(walls.get(i))) {
-                b2 = new Ghost(blinky.position, blinky.type, blinky.edible);
+                b2 = new Ghost(blinky.position, blinky.type, blinky.edible, blinky.direction);;
             }
         }
 
@@ -121,11 +121,11 @@ public class Field extends World {
         int pY = p2.position.y;
 
         Posn pPosn = new Posn(Math.abs(pX) % rightBound, Math.abs(pY) % upperBound);
-        p2 = new Ghost(pPosn, pinky.type, pinky.edible);
+        p2 = new Ghost(pPosn, pinky.type, pinky.edible, pinky.direction);
 
         for (int i = 0; i < walls.size(); i++) {
             if (p2.wallContact(walls.get(i))) {
-                p2 = new Ghost(pinky.position, pinky.type, pinky.edible);
+                p2 = new Ghost(pinky.position, pinky.type, pinky.edible, pinky.direction);
             }
         }
 
@@ -134,11 +134,11 @@ public class Field extends World {
         int iY = i2.position.y;
 
         Posn iPosn = new Posn(Math.abs(iX) % rightBound, Math.abs(iY) % upperBound);
-        i2 = new Ghost(iPosn, inky.type, inky.edible);
+        i2 = new Ghost(iPosn, inky.type, inky.edible, inky.direction);
 
         for (int i = 0; i < walls.size(); i++) {
             if (i2.wallContact(walls.get(i))) {
-                i2 = new Ghost(inky.position, inky.type, inky.edible);
+                i2 = new Ghost(inky.position, inky.type, inky.edible, inky.direction);
             }
         }
 
@@ -147,11 +147,11 @@ public class Field extends World {
         int cY = c2.position.y;
 
         Posn cPosn = new Posn(Math.abs(cX) % rightBound, Math.abs(cY) % upperBound);
-        c2 = new Ghost(cPosn, clyde.type, clyde.edible);
+        c2 = new Ghost(cPosn, clyde.type, clyde.edible, clyde.direction);
 
         for (int i = 0; i < walls.size(); i++) {
             if (c2.wallContact(walls.get(i))) {
-                c2 = new Ghost(clyde.position, clyde.type, clyde.edible);
+                c2 = new Ghost(clyde.position, clyde.type, clyde.edible, clyde.direction);
             }
         }
 
@@ -185,23 +185,17 @@ public class Field extends World {
         if (pellets.size() == 0) {
             return new Field(score,
                     new PacMan(new Posn(250, 300), pacMan.direction, pacMan.lives),
-                    new Ghost(new Posn(250, 250), 1, false),
-                    new Ghost(new Posn(250, 250), 2, false),
-                    new Ghost(new Posn(250, 250), 3, false),
-                    new Ghost(new Posn(250, 250), 4, false),
+                    new Ghost(new Posn(250, 250), 1, false, blinky.direction),
+                    new Ghost(new Posn(250, 250), 2, false, pinky.direction),
+                    new Ghost(new Posn(250, 250), 3, false, inky.direction),
+                    new Ghost(new Posn(250, 250), 4, false, clyde.direction),
                     new Pellets().pellets);
         }
 
         if (score % 5000 == 0 && score != 0) {
             PacMan nuevoP = new PacMan(pacMan.position, pacMan.direction, pacMan.lives + 1);
             pMan.lives++;
-//            return new Field(score,
-//                            nuevoP,
-//                            blinky,
-//                            pinky,
-//                            inky,
-//                            clyde,
-//                            pellets);
+            score = score + 20;
         }
 
         return new Field(score,
@@ -215,7 +209,7 @@ public class Field extends World {
 
     public Field consumeGhost(Ghost g) {
         int newScore = score + 200;
-        Ghost newG = new Ghost(new Posn(250, 250), g.type, false);
+        Ghost newG = new Ghost(new Posn(250, 250), g.type, false, g.direction);
         if (g.type == 1) {
             return new Field(newScore, pacMan, newG, pinky, inky, clyde, pellets);
         } else if (g.type == 2) {
@@ -233,10 +227,10 @@ public class Field extends World {
     public Field loseLife() {
         PacMan pMan = new PacMan(new Posn(250, 300), pacMan.direction, pacMan.lives - 1);
         Posn startPosn = new Posn(250, 250);
-        Ghost b2 = new Ghost(startPosn, blinky.type, blinky.edible);
-        Ghost p2 = new Ghost(startPosn, pinky.type, pinky.edible);
-        Ghost i2 = new Ghost(startPosn, inky.type, inky.edible);
-        Ghost c2 = new Ghost(startPosn, clyde.type, clyde.edible);
+        Ghost b2 = new Ghost(startPosn, blinky.type, blinky.edible, blinky.direction);
+        Ghost p2 = new Ghost(startPosn, pinky.type, pinky.edible, pinky.direction);
+        Ghost i2 = new Ghost(startPosn, inky.type, inky.edible, inky.direction);
+        Ghost c2 = new Ghost(startPosn, clyde.type, clyde.edible, clyde.direction);
 
         return new Field(score, pMan, b2, p2, i2, c2, pellets);
 

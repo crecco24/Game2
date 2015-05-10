@@ -32,5 +32,9 @@ public class Pellet implements Consumable{
         return new DiskImage(posn, 5, java.awt.Color.YELLOW);
     }
     
+    public boolean makeEdible(){
+        return false;
+    }
+    
     
 }

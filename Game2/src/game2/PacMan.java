@@ -67,7 +67,7 @@ public class PacMan {
     
     public boolean wallContact(Walls w){
         for (int i = 0; i < w.points.size(); i++) {
-            if (distance(w.points.get(i)) <= 20) {
+            if (distance(w.points.get(i)) <= 18) {
                 return true;
             }
         }
@@ -75,7 +75,7 @@ public class PacMan {
     }
     
     public boolean ghostContact(Ghost g){
-        return this.position == g.position;
+        return distance(g.position) <= 20;
     }
     
     public PacMan loseLife(){
@@ -89,7 +89,7 @@ public class PacMan {
     public WorldImage makeImage(){
         if(mouthCounter % 2 == 0){
             mouthCounter++;
-            return new DiskImage(position, 20, java.awt.Color.YELLOW);
+            return new DiskImage(position, 18, java.awt.Color.YELLOW);
             
         } else 
             mouthCounter++;
