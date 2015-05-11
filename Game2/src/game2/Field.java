@@ -165,7 +165,6 @@ public class Field extends World {
                 || (pacMan.ghostContact(p2) && !p2.edible)
                 || (pacMan.ghostContact(i2) && !i2.edible)
                 || (pacMan.ghostContact(c2) && !c2.edible)) {
-            System.out.println("life lost");
             return loseLife();
         }
 
@@ -195,7 +194,7 @@ public class Field extends World {
         if (score % 5000 == 0 && score != 0) {
             PacMan nuevoP = new PacMan(pacMan.position, pacMan.direction, pacMan.lives + 1);
             pMan.lives++;
-            score = score + 20;
+            score = score + 10;
         }
 
         return new Field(score,
